@@ -1,6 +1,11 @@
 numpy>=1.26.4
-opencv-python>=4.11.0
 pydantic
-trism-cv
 PyYAML
 ruff
+scipy
+lap
+shapely
+onnxruntime-gpu
+
+# OpenCV (cv2) MUST be installed via conda:
+# conda install -c conda-forge opencv

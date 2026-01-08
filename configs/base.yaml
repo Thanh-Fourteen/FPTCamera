@@ -65,11 +65,10 @@ pipeline:
 # -----------------------------------------------------------------------------
 modules:
   human_detector:
-    model_name: "detection_ensemble"
-    version: 1
-    url: 0.0.0.0:8088
-    use_grpc: true
+    onnx_path: "weights/best.onnx"
     threshold: 0.4
+    iou_threshold: 0.45
+    img_size: 640
     class_names:
       0: "body"
       
