@@ -34,7 +34,7 @@ class SmartCityApp {
                     "iou_threshold": 0.45,
                     "img_size": 640,
                     "class_names": {
-                        "0": "person",
+                        "0": "human",
                     }
                 },
                 "tracker": {
@@ -47,7 +47,7 @@ class SmartCityApp {
                 "human_counter": {
                     "strategy": "humancount",
                     "visualize": true,
-                    "include_classes": ["person", "human"]
+                    "include_classes": ["human"]
                 },
             },
             "database": {
@@ -217,7 +217,7 @@ class SmartCityApp {
         });
 
         // Ensure human_counter.coordinates is array
-        if (!modules.human_counter) modules.human_counter = { strategy: 'humancount', visualize: true, include_classes: ['body', 'human'] };
+        if (!modules.human_counter) modules.human_counter = { strategy: 'humancount', visualize: true, include_classes: ['human'] };
         if (!Array.isArray(modules.human_counter.coordinates)) modules.human_counter.coordinates = [];
 
         // Build final base config object
@@ -308,7 +308,7 @@ class SmartCityApp {
         
         // Ensure critical modules have required properties
         if (!merged.modules.human_counter) {
-            merged.modules.human_counter = { strategy: 'humancount', visualize: true, include_classes: ['body', 'human'], coordinates: [] };
+            merged.modules.human_counter = { strategy: 'humancount', visualize: true, include_classes: ['human'], coordinates: [] };
         } else {
             if (!Array.isArray(merged.modules.human_counter.coordinates)) {
                 merged.modules.human_counter.coordinates = [];
@@ -2399,7 +2399,7 @@ class SmartCityApp {
     }
 
     loadState(state) {
-        if (!this.config.modules.human_counter) this.config.modules.human_counter = { strategy: 'humancount', visualize: true, include_classes: ['body', 'human'], coordinates: [] };
+        if (!this.config.modules.human_counter) this.config.modules.human_counter = { strategy: 'humancount', visualize: true, include_classes: ['human'], coordinates: [] };
         this.config.modules.human_counter.coordinates = JSON.parse(JSON.stringify(state.human_counter || []));
 
         if (this.selectedGroup) {

@@ -70,7 +70,7 @@ modules:
     iou_threshold: 0.45
     img_size: 640
     class_names:
-      0: "person"
+      0: "human"
       
   tracker:
     strategy: "bytetrack"
@@ -83,7 +83,6 @@ modules:
     strategy: "humancount"
     visualize: true
     include_classes:
-      - body
       - human
     # coordinates: 
     #   - [350, 100]

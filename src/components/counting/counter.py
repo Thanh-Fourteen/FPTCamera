@@ -15,7 +15,6 @@ class PolygonDirectionalCounter(BaseCounting):
     - Compares movement vector angle with the configured 'in' direction vector.
     """
     MERGE_CLASSES = {
-        "body": "person",
         "human": "person",
     }
     def __init__(self) -> None:

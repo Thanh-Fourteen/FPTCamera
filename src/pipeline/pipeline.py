@@ -359,7 +359,6 @@ class Pipeline:
             elif self.visualize_type == "tracking":
                 for obj in frame_data.track:
                     if getattr(obj, "label", "Unknown").lower() not in (
-                        "body",
                         "human",
                     ):
                         continue
@@ -507,7 +506,7 @@ class Pipeline:
 
         elif self.visualize_type == "tracking":
             for obj in frame_data.track:
-                if getattr(obj, "label", "Unknown").lower() not in ("body", "human"):
+                if getattr(obj, "label", "Unknown").lower() not in ("human"):
                     continue
 
                 track_id = getattr(obj, "track_id", "Unknown")

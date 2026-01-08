@@ -50,7 +50,7 @@ def create_app(frontend_path: str = "frontend") -> web.Application:
             data = await request.json()
             yaml_text = data.get("yaml")
             if not yaml_text:
-                return web.json_response({"error": "Missing 'yaml' in body"}, status=400)
+                return web.json_response({"error": "Missing 'yaml' in human"}, status=400)
             # Validate YAML structure
             try:
                 parsed = yaml.safe_load(yaml_text)
