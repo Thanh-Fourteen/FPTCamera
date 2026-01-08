@@ -7,5 +7,8 @@ lap
 shapely
 onnxruntime-gpu
 
+aiohttp
+aiortc
+
 # OpenCV (cv2) MUST be installed via conda:
 # conda install -c conda-forge opencv
