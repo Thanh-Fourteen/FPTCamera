@@ -1,0 +1,95 @@
+# configs/base.yaml
+
+# -----------------------------------------------------------------------------
+# APPLICATION GENERAL CONFIGURATION
+# -----------------------------------------------------------------------------
+application:
+  app_name: "FPTCameraApp"
+  environment: "development" # production, staging, development, test
+  camera_id: "camera-01"
+  area_name: "outdoor"
+  visualize: "tracking" # [Global Visualization]
+                        # Options: "detection" | "tracking"
+  input:
+
+    source: "data/recognition/crowded_peolpe.mp4" # input image/video path or streaming camera
+    rotate_degrees: 0  # Rotation angle in degrees (0, 90, 180, 270 supported)
+    target_fps: -1 # set default
+    skip_frames: -1 # set default
+    buffer_size: 1
+    buffer_strategy: fixed  # fixed, priority, dynamic
+    buffer_drop_policy: drop_oldest  # drop_oldest, drop_newest
+    codec: "h264"
+  output:
+    output_path: "data/output/test.mp4"
+  frame_producer:
+    reconnect_attempts: 3
+    reconnect_timeout_s: 5
+  
+# -----------------------------------------------------------------------------
+# LOGGING CONFIGURATION
+# Defines log levels and log file locations
+# ------------------------------------------------------------------------a-----
+logging:
+  default_level: "INFO" # Default log level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  main_log_file: "logs/app.log" # Path relative to the project root
+  log_file_max_bytes: 10485760 # 10MB (10 * 1024 * 1024)
+  log_file_backup_count: 5 # Keep 5 old log files
+  debug_mode: true
+  specialized_loggers:
+    debug:
+      level: "DEBUG"
+      file: "logs/debug.log"
+      max_bytes: 5242880 # 5MB
+      backup_count: 3
+    error:
+      level: "INFO"
+      file: "logs/error.log"
+      max_bytes: 10485760
+      backup_count: 5
+
+# -----------------------------------------------------------------------------
+# PIPELINE CONFIGURATION
+# Enable or disable pipeline components.
+# Setting `true` enables the module, `false` disables it.
+# -----------------------------------------------------------------------------
+pipeline:
+  human_detector: true # human detection module
+  tracker: true # tracking module
+  human_counter: true # counting
+
+# -----------------------------------------------------------------------------
+# LIST OF MODULES CONFIGURATION FILES TO INCLUDE
+# The ConfigReader will read these files and merge them into the 'modules' section.
+# Paths are relative to the base.yaml file.
+# -----------------------------------------------------------------------------
+modules:
+  human_detector:
+    model_name: "detection_ensemble"
+    version: 1
+    url: 0.0.0.0:8088
+    use_grpc: true
+    threshold: 0.4
+    class_names:
+      0: "body"
+      
+  tracker:
+    strategy: "bytetrack"
+    track_thresh: 0.3 # Threshold for tracking
+    match_thresh: 0.8 # Matching threshold for tracking
+    track_buffer: 60 # Buffer size for tracking
+    use_iou_score_only: false # Use IoU score only for tracking, if true will combine with detection score
+  
+  human_counter:
+    strategy: "humancount"
+    visualize: true
+    include_classes:
+      - body
+      - human
+    # coordinates: 
+    #   - [350, 100]
+    #   - [900, 120]
+    #   - [980, 400]
+    #   - [900, 480]
+    #   - [600, 550]
+    #   - [500, 480]
